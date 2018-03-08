@@ -1,7 +1,7 @@
 -- {-# OPTIONS_GHC -F -pgmF hspec-discover #-}
-import Rank2.Test
+import Rank2.Unit
 
 main :: IO ()
 main = do
- print "[Rank2.Test]"
+ print "[Rank2.Unit]"
 

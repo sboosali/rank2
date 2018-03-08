@@ -1,6 +1,6 @@
-{ mkDerivation, base, bytestring, containers, deepseq, doctest
-, exceptions, hashable, hedgehog, lens, mtl, QuickCheck, spiros
-, stdenv, tasty, tasty-hedgehog, tasty-quickcheck, text
+{ mkDerivation, base, bytestring, containers, criterion, deepseq
+, doctest, exceptions, hashable, hedgehog, lens, mtl, QuickCheck
+, spiros, stdenv, tasty, tasty-hedgehog, tasty-quickcheck, text
 , transformers, unordered-containers
 }:
 mkDerivation {
@@ -15,9 +15,10 @@ mkDerivation {
   ];
   executableHaskellDepends = [ base ];
   testHaskellDepends = [
-    base doctest hedgehog QuickCheck tasty tasty-hedgehog
+    base doctest hedgehog lens QuickCheck tasty tasty-hedgehog
     tasty-quickcheck
   ];
+  benchmarkHaskellDepends = [ base criterion deepseq ];
   homepage = "http://github.com/sboosali/rank2#readme";
   description = "TODO";
   license = stdenv.lib.licenses.bsd3;

@@ -1,3 +1,3 @@
 #!/bin/sh
-cabal bench
+nix-shell  --arg doBenchmark true  --run 'cabal new-bench'
 

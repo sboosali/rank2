@@ -3,11 +3,11 @@
 
 , compiler ? "default"
 
-, withProfiling ? false
-, withHoogle    ? false 
-
-, doTest        ? false
+, doTest        ? true
 , doBenchmark   ? false
+
+, withProfiling ? if doBenchmark then true else false
+, withHoogle    ? true 
 
 , development   ? true
 }:
@@ -61,85 +61,9 @@ let
 
 # "megarepos" which have multiple packages as subdirectories.
 repositories = {
-
-  reflex-dom = fetchFromGitHub {
-    owner           = "reflex-frp";
-    repo            = "reflex-dom"; 
-    rev             = "212dca4b7ff323dca423f2dd934341bdee7ea2c5";
-    sha256          = "0wv8xwr4bv2zb8qz3kf7nq2ixjg2hmyccxppgpwis3wmjai89frk";
-  };
-
 };
 
-# 
 sources = {
-
-  reflex = fetchFromGitHub {
-    owner           = "reflex-frp";
-    repo            = "reflex";
-    rev             = "8e0177ff28c25436452dba1222cbf8d1a20424fd";
-    fetchSubmodules = true;
-    sha256          = "1f0xhwq4wvf5c6w8qhvpcn30jaxxq29s2x3iy8bml3a65fpvj0sh";
-  };
-
-# PROBLEM
-# Warning:
-#     This package indirectly depends on multiple versions of the same package. This is very likely to cause a compile failure.
-#       package haskell-src-meta (haskell-src-meta-0.8.0.1-1HfhwjlpuugEHqUXKk8ROg) requires haskell-src-exts-1.19.1-GkJUFo8Rp3b1KlAdoTXU6c
-#       package reflex (reflex-0.5) requires haskell-src-exts-1.20.1-835K5nW7Qg0K3DUFrUYhiW
-# 
-# SOLUTION
-# -f-use-template-haskell 
-#   if flag(use-template-haskell)
-#     cpp-options: -DUSE_TEMPLATE_HASKELL
-#     build-depends:
-#       dependent-sum >= 0.3 && < 0.5,
-#       haskell-src-exts >= 1.16 && < 1.21,
-#       haskell-src-meta >= 0.6 && < 0.9,
-#       template-haskell >= 2.9 && < 2.13
-#     exposed-modules:
-#       Reflex.Dynamic.TH
-#     other-extensions: TemplateHaskell
-
-  # TODO `subdir ? null`
-  reflex-dom = fetchFromGitHub {
-    owner           = "reflex-frp";
-    repo            = "reflex-dom"; 
-    rev             = "212dca4b7ff323dca423f2dd934341bdee7ea2c5";
-    #fetchSubmodules = true;
-    sha256          = "0wv8xwr4bv2zb8qz3kf7nq2ixjg2hmyccxppgpwis3wmjai89frk";
-  };
-
-#   # TODO `subdir ? null`
-#   reflex-dom = fetchFromGitHub {
-#     owner           = "reflex-frp";
-#     repo            = "reflex-dom/reflex-dom"; # lol
-#     rev             = "212dca4b7ff323dca423f2dd934341bdee7ea2c5";
-# #    fetchSubmodules = true;
-#     sha256          = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-#   };
-
-    # This is where to put the output from nix-prefetch-git
-    #
-    # This is based on the results o
-    #   nix-prefetch-git http://github.com/ekmett/mtl
-    #
-    # For general git fetching:
-    #
-    # mtl = fetchgit {
-    #   url = "http://github.com/ekmett/mtl";
-    #   rev = "f75228f7a750a74f2ffd75bfbf7239d1525a87fe";
-    #   sha256= "032s8g8j4djx7y3f8ryfmg6rwsmxhzxha2qh1fj15hr8wksvz42a";
-    # };
-    #
-    # Or, more efficient for github repos:
-    #
-    # mtl = fetchFromGitHub {
-    #   owner = "ekmett";
-    #   repo = "mtl";
-    #   rev = "f75228f7a750a74f2ffd75bfbf7239d1525a87fe";
-    #   sha256= "032s8g8j4djx7y3f8ryfmg6rwsmxhzxha2qh1fj15hr8wksvz42a";
-    # };
 };
 
 in
@@ -334,5 +258,15 @@ environment
 
 ########################################
 /*
+
+, withEverything ? true # false
+
+, withProfiling ? if withEverything then true else true
+, withHoogle    ? if withEverything then true else true 
+
+, doTest        ? if withEverything then true else true
+, doBenchmark   ? if withEverything then true else true
+
+
 
 */

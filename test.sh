@@ -1,3 +1,3 @@
 #!/bin/sh
-cabal test
+nix-shell --run 'cabal new-test'
 

@@ -4,6 +4,8 @@ set -e
 
 cabal2nix . > "nix/rank2.nix"
 
+cat "nix/rank2.nix"
+
 ./provision.sh
 
 ########################################

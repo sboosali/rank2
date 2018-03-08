@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 import Test.DocTest       (doctest)
 import System.Environment (getArgs)
+import Prelude
 
 ----------------------------------------
 
